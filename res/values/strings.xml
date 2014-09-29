@@ -7,5 +7,22 @@
     <string name="title_activity_photos">Flickr Photos</string>
     <string name="login_label">Connect to Twitter</string>
     <string name="title_activity_timeline">TimelineActivity</string>
+    <string name="user_profile_image">User Profile Image Description</string>
+    <string name="username_text_view">\@foo</string>
+    <string name="tweet_body">This is a tweet</string>
+    <string name="date_text_view">Date description</string>
+    <string name="action_compose">Compose Action</string>
+    <string name="action_compose_title">Compose Title</string>
+    <string name="compose_image_desc">Compose Image Description</string>
+    <string name="compose_tweet_desc">Compose Tweet Description</string>
+    <string name="compose_tweet_hint">What\'s happening?</string>
+    <string name="tweet_button_text">Tweet</string>
+    <string name="compose_cancel">Cancel</string>
+    <string name="retweet_text">11</string>
+    <string name="tweet_likes">10</string>
+    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="compose_user">username</string>
+    <string name="back_button_desc">Back Button</string>
+    <string name="user_name_text">UserName</string>
 
 </resources>

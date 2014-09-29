@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutSetting"
+    android:layout_width="match_parent"
+	android:layout_height="300dp">
+
+    <RelativeLayout
+        android:id="@id/composeTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00B9FF"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/btnComposeCancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="#00B9FF"
+            android:contentDescription="@string/back_button_desc"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/ivComposeIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btnComposeCancel"
+            android:contentDescription="@string/compose_image_desc"
+            android:paddingLeft="2dp"
+            android:src="@drawable/ic_launcher" />
+
+        <Button
+            android:id="@+id/btnTweet"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="#00B9FF"
+            android:gravity="center"
+            android:text="@string/tweet_button_text"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/ivUserComposeImage"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/composeTopBar"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="@string/compose_image_desc"
+        android:src="@drawable/ic_launcher" />
+
+    <EditText
+        android:id="@+id/etComposeTweet"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ivUserComposeImage"
+        android:layout_marginTop="16dp"
+        android:hint="@string/compose_tweet_hint"
+        android:inputType="textMultiLine"
+        android:background="@android:color/transparent" >
+    <requestFocus />
+    </EditText>
+
+    <!-- Button
+        android:id="@+id/btnTweetDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/etComposeTweet"
+        android:paddingTop="20dp"
+        android:text="@string/tweet_button_text" />
+
+    <Button
+        android:id="@+id/btnComposeCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etComposeTweet"
+        android:paddingTop="20dp"
+        android:text="@string/compose_cancel" /-->
+
+    <TextView
+        android:id="@+id/etComposerUserHandle"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_above="@+id/etComposeTweet"
+        android:layout_toRightOf="@+id/ivUserComposeImage"
+        android:text="@string/compose_user" />
+
+    <TextView
+        android:id="@+id/etComposeUser"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_above="@+id/etComposerUserHandle"
+        android:layout_alignLeft="@+id/etComposerUserHandle"
+        android:text="@string/user_name_text" />
+
+</RelativeLayout>

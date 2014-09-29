@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="action_compose" type="id"/>
+    <item name="composeTopBar" type="id" />
+</resources>

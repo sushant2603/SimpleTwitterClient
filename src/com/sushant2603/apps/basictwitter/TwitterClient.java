@@ -8,6 +8,7 @@ import android.content.Context;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.sushant2603.apps.basictwitter.models.Tweet;
 
 /*
  * 
@@ -32,12 +33,29 @@ public class TwitterClient extends OAuthBaseClient {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
 
-	public void getHomeTimeline(AsyncHttpResponseHandler handler) {
+	public void getHomeTimeline(AsyncHttpResponseHandler handler, long max_id) {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		RequestParams params = new RequestParams();
-		params.put("since_id", "1");
+		if (max_id > 0) {
+			params.put("max_id", Long.toString(max_id));
+		}
+		params.put("count", "25");
 		client.get(apiUrl, params, handler);
 		
+	}
+
+	//
+	public void postTweet(AsyncHttpResponseHandler handler, Tweet tweet) {
+		String apiUrl = getApiUrl("statuses/update_with_media.json");
+		RequestParams params = new RequestParams();
+		params.put("status", tweet.getBody());
+		//params.put("media", "url");
+		//client.post(apiUrl, params, handler);
+	}
+
+	public void getUser(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		client.get(apiUrl, null, handler);
 	}
 
 	// CHANGE THIS

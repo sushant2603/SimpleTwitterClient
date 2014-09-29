@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <ImageView
+        android:id="@+id/ivComposeIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/compose_image_desc"
+        android:src="@drawable/ic_launcher" />
+
+   <TextView
+        android:id="@+id/etComposeUser"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/ivComposeIcon"/>
+
+    <TextView
+        android:id="@+id/etComposerUserHandle"
+        android:layout_width="wrap_content"
+        android:layout_height="5dp"
+        android:layout_below="@+id/etComposeUser"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/ivComposeIcon"/>
+
+    <EditText
+        android:id="@+id/etComposeTweet"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ivComposeIcon"
+        android:layout_marginTop="16dp"
+        android:hint="@string/compose_tweet_hint"
+        android:inputType="textMultiLine"
+        android:background="@android:color/transparent" >
+    <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btnTweetDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/etComposeTweet"
+        android:paddingTop="20dp"
+        android:text="@string/tweet_button_text" />
+
+    <Button
+        android:id="@+id/btnComposeCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etComposeTweet"
+        android:paddingTop="20dp"
+        android:text="@string/compose_cancel" />
+
+</RelativeLayout>
