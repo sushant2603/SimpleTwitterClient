@@ -3,7 +3,9 @@ package com.sushant2603.apps.basictwitter.activities;
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ public class ComposeDialog extends DialogFragment {
 	private ImageView ivUserImage;
 	private TextView tvUserName;
 	private TextView tvUserHandle;
+	private TextView etWords;
 	private EditText etTweet;
 	private Button btnTweet;
 	private ImageButton btnCancel;
@@ -55,7 +58,9 @@ public class ComposeDialog extends DialogFragment {
         etTweet = (EditText) view.findViewById(R.id.etComposeTweet);
 
 		ivUserImage.setImageResource(0);
-		Picasso.with(getActivity()).load(user.getProfileImageUrl()).into(ivUserImage);
+		if (user.getProfileImageUrl() != null) {
+			Picasso.with(getActivity()).load(user.getProfileImageUrl()).into(ivUserImage);
+		}
 		tvUserName.setText(Html.fromHtml("<font color=\"#606060\" type=\"roboto\">" + user.getName() + "</font>"));
 		tvUserHandle.setText(Html.fromHtml("<font color=\"#B3B3B3\">@" + user.getScreenName() + "</font>"));
 
@@ -63,8 +68,29 @@ public class ComposeDialog extends DialogFragment {
         btnTweet.setBackgroundColor(Color.argb(255, 0, 185, 255));
         btnTweet.setTextColor(Color.argb(255, 255, 255, 255));
         btnTweet.setGravity(android.view.Gravity.CENTER);
-        btnCancel = (ImageButton) view.findViewById(R.id.btnComposeCancel);
+        btnCancel = (ImageButton) view.findViewById(R.id.btnReply);
 
+
+        etWords = (TextView) view.findViewById(R.id.etWords);
+
+        final TextWatcher txwatcher = new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				etWords.setText(Html.fromHtml("<font color=\"#FFFFFF\" type=\"roboto\">" + 
+						String.valueOf(140 - s.length()) + " | </font>"));
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				etWords.setText(Html.fromHtml("<font color=\"#606060\" type=\"roboto\">140 | </font>"));
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		};
+		etTweet.addTextChangedListener(txwatcher);
 
         btnTweet.setOnClickListener(new View.OnClickListener() {
         	@Override

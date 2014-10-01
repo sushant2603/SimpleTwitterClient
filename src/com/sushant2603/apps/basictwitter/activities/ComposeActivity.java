@@ -36,6 +36,6 @@ public class ComposeActivity extends Activity {
 		tvUserHandle = (TextView) findViewById(R.id.etComposerUserHandle);
 		etTweet = (EditText) findViewById(R.id.etComposeTweet);
 		btnTweet = (Button) findViewById(R.id.btnTweetDown);
-		btnCancel = (Button) findViewById(R.id.btnComposeCancel);
+		btnCancel = (Button) findViewById(R.id.btnReply);
 	}
 }

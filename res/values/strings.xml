@@ -24,5 +24,7 @@
     <string name="compose_user">username</string>
     <string name="back_button_desc">Back Button</string>
     <string name="user_name_text">UserName</string>
+    <string name="num_chars">140</string>
+    <string name="num_chars_line">"140 | "</string>
 
 </resources>

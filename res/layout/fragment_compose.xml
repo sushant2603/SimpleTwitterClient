@@ -13,7 +13,7 @@
         android:orientation="horizontal" >
 
         <ImageButton
-            android:id="@+id/btnComposeCancel"
+            android:id="@+id/btnReply"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
@@ -29,7 +29,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/btnComposeCancel"
+            android:layout_toRightOf="@+id/btnReply"
             android:contentDescription="@string/compose_image_desc"
             android:paddingLeft="2dp"
             android:src="@drawable/ic_launcher" />
@@ -45,6 +45,24 @@
             android:text="@string/tweet_button_text"
             android:textSize="12sp" />
 
+        <TextView
+            android:id="@+id/etWords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:ems="3"
+            android:text="@string/num_chars_line"
+            android:textColor="#FFFFFFFF" />
+
+	  <View
+	    android:layout_width="1dip"
+	    android:layout_height="fill_parent"
+	    android:background="#FFFFFFFF"
+	    android:layout_toRightOf="@+id/etWords"
+	    android:paddingLeft="5dp"
+	/>
     </RelativeLayout>
 
     <ImageView
@@ -70,24 +88,6 @@
         android:background="@android:color/transparent" >
     <requestFocus />
     </EditText>
-
-    <!-- Button
-        android:id="@+id/btnTweetDown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/etComposeTweet"
-        android:paddingTop="20dp"
-        android:text="@string/tweet_button_text" />
-
-    <Button
-        android:id="@+id/btnComposeCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etComposeTweet"
-        android:paddingTop="20dp"
-        android:text="@string/compose_cancel" /-->
 
     <TextView
         android:id="@+id/etComposerUserHandle"

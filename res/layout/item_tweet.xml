@@ -52,35 +52,42 @@
         android:text="@string/date_text_view"
         android:textColor="#B3B3B3" />
 
-	<RelativeLayout
+	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:orientation="horizontal"
 	    android:layout_below="@+id/tvTweetBody"
-	    android:paddingTop="5dp"
-	    android:paddingBottom="10dp"
-	    android:gravity="center">
+	    android:paddingTop="3dp"
+	    android:paddingBottom="3dp">
+
+	    
+	    <ImageButton
+	        android:id="@+id/btnReply"
+	        android:layout_width="wrap_content"
+	        android:layout_height="18dp"
+	        android:contentDescription="@string/back_button_desc"
+	        android:paddingLeft="20dp"
+	        android:background="#FFFFFF"
+	        android:src="@drawable/ic_reply" />
 
 	    <TextView
 	        android:id="@+id/tvRetweets"
 	        android:layout_width="wrap_content"
 	        android:layout_height="18dp"
 	        android:drawableLeft="@drawable/ic_retweet"
-	        android:drawablePadding="1dp"
 	        android:text="@string/retweet_text"
+	        android:paddingLeft="50dp"
 	        android:textColor="#606060" />
 	
 	    <TextView
 	        android:id="@+id/tvLikes"
 	        android:layout_width="wrap_content"
-	        android:layout_height="16dp"
-	        android:layout_toRightOf="@+id/tvRetweets"
-	        android:paddingLeft="5dp"
+	        android:layout_height="18dp"
+	        android:paddingLeft="50dp"
 	        android:drawableLeft="@drawable/ic_star"
-	        android:drawablePadding="1dp"
 	        android:text="@string/tweet_likes"
 	        android:textColor="#606060" />
 
-	</RelativeLayout>
+	</LinearLayout>
 
 </RelativeLayout>

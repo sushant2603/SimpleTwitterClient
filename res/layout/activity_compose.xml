@@ -53,7 +53,7 @@
         android:text="@string/tweet_button_text" />
 
     <Button
-        android:id="@+id/btnComposeCancel"
+        android:id="@+id/btnReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
