@@ -87,9 +87,7 @@ public class ComposeDialog extends DialogFragment {
     	Window window = getDialog().getWindow();
         window.requestFeature(Window.FEATURE_NO_TITLE);
         window.setGravity(Gravity.CENTER);
-        window.setSoftInputMode(
-        		WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return view;
     }
 
@@ -100,6 +98,7 @@ public class ComposeDialog extends DialogFragment {
     	if (getDialog() == null) {
     		return;
     	}
-    	getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    	getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+    			ViewGroup.LayoutParams.MATCH_PARENT);
     }
 }

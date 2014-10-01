@@ -37,8 +37,7 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 		ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
 		imgUser.setImageResource(0);
 		Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(imgUser);
-		
-		
+
 		TextView username = (TextView) convertView.findViewById(R.id.tvUsername);
 		String usernameHtml = "<font size=\"1\">" + tweet.getUser().getName() + "</font>&nbsp;" +
 			"<font size=\"1\"  color=\"#B3B3B3\">@" + tweet.getUser().getScreenName() + "</font>";
