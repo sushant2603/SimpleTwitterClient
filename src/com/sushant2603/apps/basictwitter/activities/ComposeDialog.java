@@ -52,6 +52,10 @@ public class ComposeDialog extends DialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compose, container);
         user = (User) getArguments().getSerializable("user");
+        if (user == null) {
+        	return view;
+        }
+
         ivUserImage = (ImageView) view.findViewById(R.id.ivUserComposeImage);
         tvUserName = (TextView) view.findViewById(R.id.etComposeUser);
         tvUserHandle = (TextView) view.findViewById(R.id.etComposerUserHandle);
@@ -85,7 +89,6 @@ public class ComposeDialog extends DialogFragment {
 					int after) {
 				etWords.setText(Html.fromHtml("<font color=\"#606060\" type=\"roboto\">140 | </font>"));
 			}
-			
 			@Override
 			public void afterTextChanged(Editable s) {
 			}

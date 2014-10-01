@@ -5,18 +5,19 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 @Table(name = "User")
-public class User implements Serializable {
+public class User extends Model implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Column(name = "Name")
 	private String name;
 	@Column(name = "screenName")
 	private String screenName;
-	@Column(name = "uid", unique = true)
+	@Column(name = "uid") //, unique = true)
 	private long uid;
 	@Column(name = "profileImageUrl")
 	private String profileImageUrl;
@@ -47,7 +48,7 @@ public class User implements Serializable {
 		return screenName;
 	}
 
-	public long getId() {
+	public long getUId() {
 		return uid;
 	}
 

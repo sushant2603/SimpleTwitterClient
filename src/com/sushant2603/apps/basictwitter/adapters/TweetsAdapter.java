@@ -12,6 +12,7 @@ import com.sushant2603.apps.basictwitter.models.Tweet;
 import android.content.Context;
 import android.text.Html;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,11 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 		}
 		ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
 		imgUser.setImageResource(0);
-		Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(imgUser);
+		try {
+			Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(imgUser);
+		} catch (Exception e) {
+			Log.d("Debug", e.toString());
+		}
 
 		TextView username = (TextView) convertView.findViewById(R.id.tvUsername);
 		String usernameHtml = "<font size=\"1\">" + tweet.getUser().getName() + "</font>&nbsp;" +

@@ -120,6 +120,7 @@ public class TimelineActivity extends Activity {
 			}
 			@Override
 			public void onFailure(Throwable e, String s) {
+				swipeContainer.setRefreshing(false);
 				Log.d("debug", e.toString());
 			}
 		}, 0, since_id);
@@ -127,13 +128,17 @@ public class TimelineActivity extends Activity {
 
 
 	public void populateTimeline(long max_id, long since_id) {
-		//if (isNetworkAvailable()) {
-			//Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
-			//tweets.clear();
-			//tweets.addAll(Tweet.getAll());
+		/*if (!isNetworkAvailable()) {
+			Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
+			tweets.clear();
+			tweets.addAll(Tweet.getAll());
 			aTweets.notifyDataSetChanged();
-			//return;
-		//}
+			return;
+		}
+
+		if (max_id == 0 && since_id == 0) {
+			tweets.clear();
+		}*/
 
 		client.getHomeTimeline(new JsonHttpResponseHandler() {
 			@Override
@@ -168,27 +173,16 @@ public class TimelineActivity extends Activity {
 	private void commit() {
 		ActiveAndroid.beginTransaction();
 		Tweet.deleteAll();
+		int total = tweets.size() > 25 ? 25 : tweets.size();
 		try {
-			for (int ii = 0; ii < tweets.size(); ii++) {
+			for (int ii = 0; ii < total; ii++) {
+				tweets.get(ii).getUser().save();
 				tweets.get(ii).save();
 			}
 			ActiveAndroid.setTransactionSuccessful();
 		} finally {
 			ActiveAndroid.endTransaction();
 		}
-		//List<Tweet> temp = Tweet.getAll();
-	}
-
-	public Boolean isOnline() {
-	    try {
-	        Process p1 = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.com");
-	        int returnVal = p1.waitFor();
-	        boolean reachable = (returnVal==0);
-	        return reachable;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return false;
 	}
 
 	private Boolean isNetworkAvailable() {
