@@ -45,7 +45,7 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 		TextView body = (TextView) convertView.findViewById(R.id.tvTweetBody);
 		body.setText(tweet.getBody());
 		TextView date = (TextView) convertView.findViewById(R.id.tvDate);
-		//date.setText(tweet.getCreatedAt());
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss Z yyyy",
 				Locale.ENGLISH);
 		dateFormat.setLenient(true);
@@ -57,6 +57,11 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 			Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
 			date.setVisibility(TextView.GONE);
 		}
+
+		TextView tvRetweets = (TextView) convertView.findViewById(R.id.tvRetweets);
+		tvRetweets.setText(Integer.toString(tweet.getRetweets()));
+		TextView tvLikes = (TextView) convertView.findViewById(R.id.tvLikes);
+		tvLikes.setText(Integer.toString(tweet.getLikes()));
 		return convertView;
 	}
 }

@@ -66,18 +66,6 @@ public class TimelineActivity extends Activity {
 				populateTimeline(tweets.get(tweets.size()-1).getUid(), 0);
 			}
 		});
-
-		/*lvTweets.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent i = new Intent(TimelineActivity.this, TweetDetailsActivity.class);
-				Tweet tweet = aTweets.getItem(position);
-				i.putExtra("tweet", tweet);
-				startActivity(i);
-			}
-			
-		});*/
 		getUserDetails();
 		populateTimeline(0, 0);
 		getActionBar().setTitle("Home");
@@ -111,12 +99,9 @@ public class TimelineActivity extends Activity {
 						}
 						@Override
 						public void onFailure(Throwable e, String s) {
-							Toast.makeText(TimelineActivity.this, e.toString(), Toast.LENGTH_LONG).show();
 							Log.d("debug", e.toString());
 						}
 					}, tweet);
-					//tweets.addFirst(tweet);
-					//aTweets.notifyDataSetChanged();
 				}
 			}
 		};
@@ -131,6 +116,7 @@ public class TimelineActivity extends Activity {
 				}
 				commit();
 				aTweets.notifyDataSetChanged();
+				swipeContainer.setRefreshing(false);
 			}
 			@Override
 			public void onFailure(Throwable e, String s) {
@@ -200,7 +186,6 @@ public class TimelineActivity extends Activity {
 	        boolean reachable = (returnVal==0);
 	        return reachable;
 	    } catch (Exception e) {
-	        // TODO Auto-generated catch block
 	        e.printStackTrace();
 	    }
 	    return false;

@@ -26,6 +26,10 @@ public class Tweet extends Model implements Serializable {
 	private String createdAt;
 	@Column(name = "User", onUpdate = ForeignKeyAction.CASCADE, onDelete = ForeignKeyAction.CASCADE)
 	private User user;
+	@Column(name = "Likes")
+	private int likes;
+	@Column(name = "Retweets")
+	private int retweets;
 
 	public Tweet() {
 		super();
@@ -46,6 +50,8 @@ public class Tweet extends Model implements Serializable {
 			tweet.uid =jsonObject.getLong("id");
 			tweet.createdAt = jsonObject.getString("created_at");
 			tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+			tweet.likes = jsonObject.getInt("favorite_count");
+			tweet.retweets = jsonObject.getInt("retweet_count");
 		} catch (JSONException e){
 			e.printStackTrace();
 			return null;
@@ -86,7 +92,15 @@ public class Tweet extends Model implements Serializable {
 	public User getUser() {
 		return user;
 	}
-	
+
+	public int getRetweets() {
+		return retweets;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
 	@Override
 	public String toString() {
 		return "Tweet";
@@ -107,6 +121,14 @@ public class Tweet extends Model implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 		
+	}
+
+	public void setRetweets(int retweets) {
+		this.retweets = retweets;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
 	}
 
 	public static void deleteAll() {
