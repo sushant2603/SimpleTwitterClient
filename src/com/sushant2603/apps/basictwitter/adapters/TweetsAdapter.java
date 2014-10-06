@@ -5,12 +5,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.json.JSONObject;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.sushant2603.apps.basictwitter.R;
+import com.sushant2603.apps.basictwitter.activities.ComposeDialog;
 import com.sushant2603.apps.basictwitter.activities.ProfileActivity;
+import com.sushant2603.apps.basictwitter.activities.ComposeDialog.ComposeDialogListener;
+import com.sushant2603.apps.basictwitter.fragments.TweetsListFragment;
 import com.sushant2603.apps.basictwitter.models.Tweet;
 import com.sushant2603.apps.basictwitter.models.User;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
@@ -20,6 +28,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +93,9 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 		tvRetweets.setText(Integer.toString(tweet.getRetweets()));
 		TextView tvLikes = (TextView) convertView.findViewById(R.id.tvLikes);
 		tvLikes.setText(Integer.toString(tweet.getLikes()));
+
+		ImageButton reply = (ImageButton) convertView.findViewById(R.id.btnReply);
+		reply.setTag(tweet.getUser().getScreenName());
 		return convertView;
 	}
 }

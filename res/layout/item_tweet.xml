@@ -68,7 +68,8 @@
 	        android:contentDescription="@string/back_button_desc"
 	        android:paddingLeft="20dp"
 	        android:background="#FFFFFF"
-	        android:src="@drawable/ic_reply" />
+	        android:src="@drawable/ic_reply"
+	        android:onClick="onReply" />
 
 	    <TextView
 	        android:id="@+id/tvRetweets"

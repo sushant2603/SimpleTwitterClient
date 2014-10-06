@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.activeandroid.ActiveAndroid;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -113,7 +114,7 @@ public class TimelineActivity extends FragmentActivity {
 	        ft.remove(prev);
 	    }
 	    ft.addToBackStack(null);
-		ComposeDialog dialog = ComposeDialog.newInstance(mainUser);
+		ComposeDialog dialog = ComposeDialog.newInstance(mainUser, "");
 		dialog.show(ft, "compose");
 		dialog.listener = new ComposeDialogListener() {
 			@Override
@@ -141,6 +142,38 @@ public class TimelineActivity extends FragmentActivity {
 		Intent i = new Intent(this, ProfileActivity.class);
 		i.putExtra("user", mainUser);
 		startActivity(i);
+	}
+	
+	public void onReply(View view) {
+	    FragmentTransaction ft = getFragmentManager().beginTransaction();
+	    Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+	    if (prev != null) {
+	        ft.remove(prev);
+	    }
+	    ft.addToBackStack(null);
+	    String username = (String) view.getTag();
+		ComposeDialog dialog = ComposeDialog.newInstance(mainUser, username);
+		dialog.show(ft, "compose");
+		dialog.listener = new ComposeDialogListener() {
+			@Override
+			public void onFinishComposeDialog(Tweet tweet) {
+				if (tweet != null) {
+					client.postTweet(new JsonHttpResponseHandler() {
+						@Override
+						public void onSuccess(JSONObject json) {
+							Tweet tweet = Tweet.fromJSON(json);
+					        TweetsListFragment fragment = (TweetsListFragment) 
+					        	getSupportFragmentManager().findFragmentById(R.id.flContainer);
+							fragment.add(tweet);
+						}
+						@Override
+						public void onFailure(Throwable e, String s) {
+							Log.d("debug", e.toString());
+						}
+					}, tweet);
+				}
+			}
+		};
 	}
 
 	/*public void populateNewItems(long since_id) {

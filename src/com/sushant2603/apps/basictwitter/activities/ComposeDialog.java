@@ -33,12 +33,14 @@ public class ComposeDialog extends DialogFragment {
 	private Button btnTweet;
 	private ImageButton btnCancel;
 	private User user;
+	private String replyUserName;
 	public ComposeDialogListener listener;
 
-    static ComposeDialog newInstance(User user) {
+    static ComposeDialog newInstance(User user, String replyUserName) {
         ComposeDialog dialog = new ComposeDialog();
         Bundle args = new Bundle();
         args.putSerializable("user", user);
+        args.putString("reply_user", replyUserName);
         dialog.setArguments(args);
         return dialog;
     }
@@ -52,6 +54,7 @@ public class ComposeDialog extends DialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compose, container);
         user = (User) getArguments().getSerializable("user");
+        replyUserName = getArguments().getString("reply_user");
         if (user == null) {
         	return view;
         }
@@ -94,6 +97,9 @@ public class ComposeDialog extends DialogFragment {
 			}
 		};
 		etTweet.addTextChangedListener(txwatcher);
+		if (!replyUserName.isEmpty()) {
+			etTweet.setText("@" + replyUserName);
+		}
 
         btnTweet.setOnClickListener(new View.OnClickListener() {
         	@Override
