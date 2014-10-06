@@ -2,6 +2,7 @@ package com.sushant2603.apps.basictwitter.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -59,8 +60,8 @@ public class Tweet extends Model implements Serializable {
 		return tweet;
 	}
 
-	public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray) {
-		ArrayList<Tweet> result = new ArrayList<Tweet>();
+	public static LinkedList<Tweet> fromJSONArray(JSONArray jsonArray) {
+		LinkedList<Tweet> result = new LinkedList<Tweet>();
 		for (int index = 0; index < jsonArray.length(); index++) {
 			JSONObject tweetJson = null; 
 			try {

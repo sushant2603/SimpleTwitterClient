@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" 
+    android:background="#FFFFFF">
+
+    <RelativeLayout
+        android:id="@+id/userInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#E6E6E6">
+	    <LinearLayout
+	    	android:id="@+id/llinfo"
+	        android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="vertical"
+    		android:layout_marginTop="20dp"
+    		android:gravity="center"
+    		android:paddingBottom="10dp">
+		    <ImageView
+		        android:id="@+id/imageView1"
+		        android:layout_width="50dp"
+		        android:layout_height="50dp"
+		        android:src="@drawable/ic_launcher"
+		        android:contentDescription="TODO"/>
+	
+		    <TextView
+		        android:id="@+id/tvProfileUser"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/profile_user_name"
+		        android:textColor="#FFFFFF" />
+	
+		    <TextView
+		        android:id="@+id/tvProfileTag"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/profile_user_tag_desc"
+		        android:textColor="#FFFFFF" />
+		 </LinearLayout>
+	</RelativeLayout>
+	<LinearLayout
+	    	android:id="@+id/llCounts"
+	        android:layout_width="match_parent"
+    		android:layout_height="40dp"
+    		android:orientation="horizontal"
+    		android:layout_marginBottom="10dp"
+    		android:layout_below="@+id/userInfo"
+    		android:weightSum="3"
+    		android:background="#E6E6E6">
+
+	     <Button
+	         android:id="@+id/tvProfileTweets"
+	         android:layout_width="fill_parent"
+	         android:layout_height="match_parent"
+	         android:layout_weight="1"
+	         android:background="@drawable/button_background"
+	         android:paddingRight="10dp"
+	         android:text="11\nTweets"
+	         android:textSize="12sp"
+	         android:gravity="left|center_vertical" />
+
+	    <Button
+	        android:id="@+id/tvProfileFollowers"
+	        android:layout_width="fill_parent"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:background="@drawable/button_background"
+	        android:text="2\nFollowers"
+	        android:textSize="12sp"
+	        android:gravity="left|center_vertical" />
+
+	    <Button
+	        android:id="@+id/tvProfileFollowing"
+	        android:layout_width="fill_parent"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:background="@drawable/button_background"
+	        android:text="11\nFollowing"
+	        android:textSize="12sp"
+	        android:gravity="left|center_vertical"/>
+
+	</LinearLayout>
+
+	<FrameLayout
+	    android:id="@+id/profileTweetsTimeline"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@+id/llCounts" >
+
+    </FrameLayout>
+</RelativeLayout>

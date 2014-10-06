@@ -7,9 +7,12 @@ import java.util.Locale;
 
 import com.squareup.picasso.Picasso;
 import com.sushant2603.apps.basictwitter.R;
+import com.sushant2603.apps.basictwitter.activities.ProfileActivity;
 import com.sushant2603.apps.basictwitter.models.Tweet;
+import com.sushant2603.apps.basictwitter.models.User;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -23,8 +26,12 @@ import android.widget.Toast;
 
 public class TweetsAdapter extends ArrayAdapter<Tweet> {
 
+	private Context context;
+	private ImageView imgUser;
+
 	public TweetsAdapter(Context context, List<Tweet> tweets) {
 		super(context, android.R.layout.simple_list_item_1, tweets);
+		this.context = context;
 	}
 
 	@Override
@@ -35,13 +42,22 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet,
 					parent, false);
 		}
-		ImageView imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
+		imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
 		imgUser.setImageResource(0);
 		try {
 			Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(imgUser);
 		} catch (Exception e) {
 			Log.d("Debug", e.toString());
 		}
+		imgUser.setTag(tweet.getUser());
+		imgUser.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(context, ProfileActivity.class);
+				i.putExtra("user", (User) imgUser.getTag());
+				context.startActivity(i);
+			}
+		});
 
 		TextView username = (TextView) convertView.findViewById(R.id.tvUsername);
 		String usernameHtml = "<font size=\"1\">" + tweet.getUser().getName() + "</font>&nbsp;" +

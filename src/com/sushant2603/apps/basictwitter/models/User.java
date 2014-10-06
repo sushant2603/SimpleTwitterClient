@@ -21,6 +21,11 @@ public class User extends Model implements Serializable {
 	private long uid;
 	@Column(name = "profileImageUrl")
 	private String profileImageUrl;
+	private String profileBackgroundImageUrl;
+	private String tagline;
+	private int nTweets;
+	private int nFollowers;
+	private int nFavorites;
 
 	public User() {
 		super();
@@ -31,8 +36,13 @@ public class User extends Model implements Serializable {
 		try {
 			user.name = jsonObject.getString("name");
 			user.screenName = jsonObject.getString("screen_name");
-			user.uid =jsonObject.getLong("id");
+			user.uid = jsonObject.getLong("id");
 			user.profileImageUrl = jsonObject.getString("profile_image_url");
+			user.tagline = jsonObject.getString("description");
+			user.profileBackgroundImageUrl = jsonObject.getString("profile_background_image_url");
+			user.nFollowers = jsonObject.getInt("followers_count");
+			user.nTweets = jsonObject.getInt("statuses_count");
+			user.nFavorites = jsonObject.getInt("friends_count");
 		} catch (JSONException e){
 			e.printStackTrace();
 			return null;
@@ -52,7 +62,28 @@ public class User extends Model implements Serializable {
 		return uid;
 	}
 
+	public int getNTweets() {
+		return nTweets;
+	}
+
+	public int getNFollowers() {
+		return nFollowers;
+	}
+
+	public int getNFavorites() {
+		return nFavorites;
+	}
+
 	public String getProfileImageUrl() {
 		return profileImageUrl;
 	}
+
+	public String getProfileBackgroundImageUrl() {
+		return profileBackgroundImageUrl;
+	}
+
+	public String getTagline() {
+		return tagline;
+	}
+
 }

@@ -1,12 +1,47 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme for API 14+. This theme completely replaces
         AppBaseTheme from BOTH res/values/styles.xml and
         res/values-v11/styles.xml on API 14+ devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <!-- style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar" -->
         <!-- API 14 theme customizations can go here. -->
-    </style>
+    <!-- /style -->
 
+    <style name="MyTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/MyTheme.ActionBar</item>
+	    <item name="android:actionBarTabBarStyle">@style/MyTheme.ActionBar.TabBar</item>
+	    <item name="android:actionBarTabStyle">@style/MyTheme.ActionBar.TabView</item>
+	    <!-- item name="android:actionBarTabStyle">@style/MyTheme.ActionBar.TabView</item-->
+	    <item name="android:actionBarTabTextStyle">@style/MyTheme.ActionBar.TabText</item>
+	</style>
+
+    <style name="MyTheme.ActionBar" parent="android:style/Widget.Holo.Light.ActionBar">
+	    <item name="android:textColor">@android:color/white</item>
+	</style>
+
+	
+	<style name="MyTheme.ActionBar.TabBar" parent="android:style/Widget.Holo.Light.ActionBar.TabBar">
+	    <item name="android:background">@drawable/tab_bar_background</item>
+	</style>
+	<style name="MyTheme.ActionBar.TabView" parent="android:style/Widget.Holo.Light.ActionBar.TabView">
+	    <item name="android:background">@drawable/tab_bar_background</item>
+	</style>
+	<style name="MyTheme.ActionBar.TabText" parent="android:style/Widget.Holo.ActionBar.TabText">
+	    <!-- This is a WHITE tab color -->
+	    <item name="android:textColor">@android:color/white</item>
+	</style>
+	<style name="buttonStyle">
+    	<item name="android:textColor">#ffffff</item>
+    	<item name="android:background">#80000000</item>
+    	<item name="android:button">
+        	<shape
+            	android:shape="rectangle" >
+            	<stroke
+               	 	android:width="0.5dp"
+               	 	android:color="#ffffff" />
+        	</shape>
+    	</item>
+	</style>
 </resources>

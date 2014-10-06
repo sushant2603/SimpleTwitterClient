@@ -26,5 +26,10 @@
     <string name="user_name_text">UserName</string>
     <string name="num_chars">140</string>
     <string name="num_chars_line">"140 | "</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="action_profile">Profile View</string>
+    <string name="action_profile_title">Profile View Title</string>
+    <string name="profile_user_tag_desc">tvProfileTagDesc</string>
+    <string name="profile_user_name">ProfileUserName</string>
 
 </resources>

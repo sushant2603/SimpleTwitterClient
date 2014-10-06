@@ -1,44 +1,40 @@
 package com.sushant2603.apps.basictwitter.activities;
 
-import java.util.LinkedList;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.sushant2603.apps.basictwitter.EndlessScrollListener;
 import com.sushant2603.apps.basictwitter.R;
 import com.sushant2603.apps.basictwitter.TwitterApplication;
 import com.sushant2603.apps.basictwitter.TwitterClient;
 import com.sushant2603.apps.basictwitter.activities.ComposeDialog.ComposeDialogListener;
-import com.sushant2603.apps.basictwitter.adapters.TweetsAdapter;
+import com.sushant2603.apps.basictwitter.fragments.HomeTimelineFragment;
+import com.sushant2603.apps.basictwitter.fragments.MentionsTimelineFragment;
+import com.sushant2603.apps.basictwitter.fragments.TweetsListFragment;
+import com.sushant2603.apps.basictwitter.listeners.FragmentTabListener;
 import com.sushant2603.apps.basictwitter.models.Tweet;
 import com.sushant2603.apps.basictwitter.models.User;
 
-public class TimelineActivity extends Activity {
-	private SwipeRefreshLayout swipeContainer;
+public class TimelineActivity extends FragmentActivity {
+	//private SwipeRefreshLayout swipeContainer;
 	private TwitterClient client;
-	private LinkedList<Tweet> tweets;
-	private TweetsAdapter aTweets;
-	private ListView lvTweets;
+	//private LinkedList<Tweet> tweets;
+	//private TweetsAdapter aTweets;
+	//private TweetsListFragment fragmentTweetsList;
+	//private ListView lvTweets;
 	private User mainUser;
 
 	@Override
@@ -46,28 +42,31 @@ public class TimelineActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		ActiveAndroid.initialize(this);
 		setContentView(R.layout.activity_timeline);
-		swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+		setupTabs();
+		/*swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
 		swipeContainer.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
 				populateNewItems(tweets.get(0).getUid());
 			}
-		});
+		});*/
 
 		client = TwitterApplication.getRestClient();
-		lvTweets = (ListView) findViewById(R.id.lvTweets);
-		tweets = new LinkedList<Tweet>();
-		aTweets = new TweetsAdapter(this, tweets);
+		//fragmentTweetsList = (TweetsListFragment) 
+		//		getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
+		//lvTweets = (ListView) findViewById(R.id.lvTweets);
+		//tweets = new LinkedList<Tweet>();
+		//aTweets = new TweetsAdapter(this, tweets);
 
-		lvTweets.setAdapter(aTweets);
+		/*lvTweets.setAdapter(aTweets);
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {
 				populateTimeline(tweets.get(tweets.size()-1).getUid(), 0);
 			}
-		});
+		});*/
 		getUserDetails();
-		populateTimeline(0, 0);
+		//populateTimeline(0, 0);
 		getActionBar().setTitle("Home");
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(255, 0, 185, 255)));
 	}
@@ -76,6 +75,35 @@ public class TimelineActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.compose, menu);
 		return true;
+	}
+
+	private void setupTabs() {
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayShowTitleEnabled(true);
+
+		Tab tab1 = actionBar
+			.newTab()
+			.setText("Home")
+			.setIcon(R.drawable.ic_home)
+			.setTag("HomeTimelineFragment")
+			.setTabListener(
+				new FragmentTabListener<HomeTimelineFragment>(R.id.flContainer, this, "first",
+								HomeTimelineFragment.class));
+
+		actionBar.addTab(tab1);
+		actionBar.selectTab(tab1);
+
+		Tab tab2 = actionBar
+			.newTab()
+			.setText("Mentions")
+			.setIcon(R.drawable.ic_mentions)
+			.setTag("MentionsTimelineFragment")
+			.setTabListener(
+			    new FragmentTabListener<MentionsTimelineFragment>(R.id.flContainer, this, "second",
+								MentionsTimelineFragment.class));
+
+		actionBar.addTab(tab2);
 	}
 
 	public void onComposeAction(MenuItem mi) {
@@ -94,8 +122,10 @@ public class TimelineActivity extends Activity {
 					client.postTweet(new JsonHttpResponseHandler() {
 						@Override
 						public void onSuccess(JSONObject json) {
-							tweets.addFirst(Tweet.fromJSON(json));
-							aTweets.notifyDataSetChanged();
+							Tweet tweet = Tweet.fromJSON(json);
+					        TweetsListFragment fragment = (TweetsListFragment) 
+					        	getSupportFragmentManager().findFragmentById(R.id.flContainer);
+							fragment.add(tweet);
 						}
 						@Override
 						public void onFailure(Throwable e, String s) {
@@ -107,21 +137,28 @@ public class TimelineActivity extends Activity {
 		};
 	}
 
-	public void populateNewItems(long since_id) {
+	public void onProfileView(MenuItem mi) {
+		Intent i = new Intent(this, ProfileActivity.class);
+		i.putExtra("user", mainUser);
+		startActivity(i);
+	}
+
+	/*public void populateNewItems(long since_id) {
 		client.getHomeTimeline(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray json) {
 				for (Tweet tweet : Tweet.fromJSONArray(json)) {
 					tweets.addFirst(tweet);
+					fragmentTweetsList.addAll(tweets);
 				}
 				commit();
-				aTweets.notifyDataSetChanged();
-				swipeContainer.setRefreshing(false);
+				//aTweets.notifyDataSetChanged();
+				//swipeContainer.setRefreshing(false);
 			}
 			@Override
 			public void onFailure(Throwable e, String s) {
-				swipeContainer.setRefreshing(false);
-				Log.d("debug", e.toString());
+				//swipeContainer.setRefreshing(false);
+				//Log.d("debug", e.toString());
 			}
 		}, 0, since_id);
 	}
@@ -140,12 +177,12 @@ public class TimelineActivity extends Activity {
 			tweets.clear();
 		}*/
 
-		client.getHomeTimeline(new JsonHttpResponseHandler() {
+		/*client.getHomeTimeline(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray json) {
 				tweets.addAll(Tweet.fromJSONArray(json));
-				commit();
-				aTweets.notifyDataSetChanged();
+				//commit();
+			//	aTweets.notifyDataSetChanged();
 			}
 			@Override
 			public void onFailure(Throwable e, String s) {
@@ -153,7 +190,7 @@ public class TimelineActivity extends Activity {
 				Log.d("debug", e.toString());
 			}
 		}, max_id, since_id);
-	}
+	}*/
 
 	public void getUserDetails() {
 		if (mainUser == null) {
@@ -170,7 +207,7 @@ public class TimelineActivity extends Activity {
 		}
 	}
 
-	private void commit() {
+	/*private void commit() {
 		ActiveAndroid.beginTransaction();
 		Tweet.deleteAll();
 		int total = tweets.size() > 25 ? 25 : tweets.size();
@@ -190,5 +227,5 @@ public class TimelineActivity extends Activity {
 	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 	    return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
-	}
+	}*/
 }
