@@ -240,22 +240,7 @@ public class TimelineActivity extends FragmentActivity {
 		}
 	}
 
-	/*private void commit() {
-		ActiveAndroid.beginTransaction();
-		Tweet.deleteAll();
-		int total = tweets.size() > 25 ? 25 : tweets.size();
-		try {
-			for (int ii = 0; ii < total; ii++) {
-				tweets.get(ii).getUser().save();
-				tweets.get(ii).save();
-			}
-			ActiveAndroid.setTransactionSuccessful();
-		} finally {
-			ActiveAndroid.endTransaction();
-		}
-	}
-
-	private Boolean isNetworkAvailable() {
+	/*private Boolean isNetworkAvailable() {
 	    ConnectivityManager connectivityManager 
 	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();

@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -138,5 +139,28 @@ public class Tweet extends Model implements Serializable {
 
 	public static List<Tweet> getAll() {
 		return new Select().from(Tweet.class).execute();
+	}
+
+	public static void findOrInsert(Tweet tweet) {
+		List<User> result = new Select()
+			.from(Tweet.class)
+			.where("uid=" + Long.toString(tweet.getUid()))
+			.execute();
+		if (result.size() == 0) {
+			User.findOrInsert(tweet.getUser());
+			tweet.save();
+		}
+	}
+
+	public static void InsertAll(LinkedList<Tweet> tweets) {
+		ActiveAndroid.beginTransaction();
+		try {
+			for (Tweet tweet : tweets) {
+				findOrInsert(tweet);
+			}
+			ActiveAndroid.setTransactionSuccessful();
+		} finally {
+			ActiveAndroid.endTransaction();
+		}
 	}
 }

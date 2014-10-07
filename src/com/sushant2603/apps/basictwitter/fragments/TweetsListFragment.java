@@ -16,8 +16,11 @@ import com.sushant2603.apps.basictwitter.adapters.TweetsAdapter;
 import com.sushant2603.apps.basictwitter.models.Tweet;
 import com.sushant2603.apps.basictwitter.models.User;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -65,7 +68,6 @@ public class TweetsListFragment extends Fragment {
 				populateTimeline(tweets.get(tweets.size()-1).getUid(), 0);
 			}
 		});
-
 		return view;
 	}
 	
@@ -82,10 +84,18 @@ public class TweetsListFragment extends Fragment {
 			this.tweets.addFirst(tweets.get(index));
 		}
 		aTweets.notifyDataSetChanged();
+		Tweet.InsertAll(tweets);
 	}
 
 	public void add(Tweet tweet) {
         this.tweets.addFirst(tweet);
 		aTweets.notifyDataSetChanged();
+	}
+	
+	protected Boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
 	}
 }

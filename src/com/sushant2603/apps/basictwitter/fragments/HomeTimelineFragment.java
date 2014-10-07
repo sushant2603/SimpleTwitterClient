@@ -31,6 +31,10 @@ public class HomeTimelineFragment extends TweetsListFragment {
 
 	@Override
 	public void populateNewItems(long since_id) {
+		if (!isNetworkAvailable()) {
+			addAll((LinkedList<Tweet>) Tweet.getAll());
+			return;
+		}
 		client.getHomeTimeline(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray json) {
@@ -42,7 +46,6 @@ public class HomeTimelineFragment extends TweetsListFragment {
 			}
 		}, 0, since_id);
 	}
-
 
 	@Override
 	public void populateTimeline(long max_id, long since_id) {

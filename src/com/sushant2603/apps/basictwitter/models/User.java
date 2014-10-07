@@ -1,13 +1,16 @@
 package com.sushant2603.apps.basictwitter.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 @Table(name = "User")
 public class User extends Model implements Serializable {
@@ -17,14 +20,19 @@ public class User extends Model implements Serializable {
 	private String name;
 	@Column(name = "screenName")
 	private String screenName;
-	@Column(name = "uid") //, unique = true)
+	@Column(name = "uid", unique = true)
 	private long uid;
 	@Column(name = "profileImageUrl")
 	private String profileImageUrl;
+	@Column(name = "profileBackgroundImageUrl")
 	private String profileBackgroundImageUrl;
+	@Column(name = "tagline")
 	private String tagline;
+	@Column(name = "nTweets")
 	private int nTweets;
+	@Column(name = "nFollowers")
 	private int nFollowers;
+	@Column(name = "nFavorites")
 	private int nFavorites;
 
 	public User() {
@@ -86,4 +94,13 @@ public class User extends Model implements Serializable {
 		return tagline;
 	}
 
+	public static void findOrInsert(User user) {
+		List<User> result = new Select()
+			.from(User.class)
+			.where("uid=" + Long.toString(user.getUId()))
+			.execute();
+		if (result.size() == 0) {
+			user.save();
+		}
+	}
 }
