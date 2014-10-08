@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,7 +69,7 @@ public class TimelineActivity extends FragmentActivity {
 		});*/
 		getUserDetails();
 		//populateTimeline(0, 0);
-		getActionBar().setTitle("Home");
+		getActionBar().setTitle(Html.fromHtml("<font color=\"#FFFFFF\">" + "Home" + "</font>"));
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(255, 0, 185, 255)));
 	}
 
@@ -114,11 +115,11 @@ public class TimelineActivity extends FragmentActivity {
 	        ft.remove(prev);
 	    }
 	    ft.addToBackStack(null);
-		ComposeDialog dialog = ComposeDialog.newInstance(mainUser, "");
+		ComposeDialog dialog = ComposeDialog.newInstance(mainUser, "", 0);
 		dialog.show(ft, "compose");
 		dialog.listener = new ComposeDialogListener() {
 			@Override
-			public void onFinishComposeDialog(Tweet tweet) {
+			public void onFinishComposeDialog(Tweet tweet, long replyId) {
 				if (tweet != null) {
 					client.postTweet(new JsonHttpResponseHandler() {
 						@Override
@@ -132,7 +133,7 @@ public class TimelineActivity extends FragmentActivity {
 						public void onFailure(Throwable e, String s) {
 							Log.d("debug", e.toString());
 						}
-					}, tweet);
+					}, tweet, 0);
 				}
 			}
 		};
@@ -151,12 +152,13 @@ public class TimelineActivity extends FragmentActivity {
 	        ft.remove(prev);
 	    }
 	    ft.addToBackStack(null);
-	    String username = (String) view.getTag();
-		ComposeDialog dialog = ComposeDialog.newInstance(mainUser, username);
+	    String username = (String) view.getTag(R.id.TAG_USER);
+	    Long replyId = (Long) view.getTag(R.id.TWEET_ID);
+		ComposeDialog dialog = ComposeDialog.newInstance(mainUser, username, replyId);
 		dialog.show(ft, "compose");
 		dialog.listener = new ComposeDialogListener() {
 			@Override
-			public void onFinishComposeDialog(Tweet tweet) {
+			public void onFinishComposeDialog(Tweet tweet, long replyId) {
 				if (tweet != null) {
 					client.postTweet(new JsonHttpResponseHandler() {
 						@Override
@@ -170,7 +172,7 @@ public class TimelineActivity extends FragmentActivity {
 						public void onFailure(Throwable e, String s) {
 							Log.d("debug", e.toString());
 						}
-					}, tweet);
+					}, tweet, replyId);
 				}
 			}
 		};

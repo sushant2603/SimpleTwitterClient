@@ -34,19 +34,21 @@ public class ComposeDialog extends DialogFragment {
 	private ImageButton btnCancel;
 	private User user;
 	private String replyUserName;
+	private long replyId;
 	public ComposeDialogListener listener;
 
-    static ComposeDialog newInstance(User user, String replyUserName) {
+    static ComposeDialog newInstance(User user, String replyUserName, long replyId) {
         ComposeDialog dialog = new ComposeDialog();
         Bundle args = new Bundle();
         args.putSerializable("user", user);
         args.putString("reply_user", replyUserName);
+        args.putLong("reply_id", replyId);
         dialog.setArguments(args);
         return dialog;
     }
 
     public interface ComposeDialogListener {
-    	void onFinishComposeDialog(Tweet tweet);
+    	void onFinishComposeDialog(Tweet tweet, long replyId);
     }
 
     @Override
@@ -55,6 +57,7 @@ public class ComposeDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_compose, container);
         user = (User) getArguments().getSerializable("user");
         replyUserName = getArguments().getString("reply_user");
+        replyId = getArguments().getLong("reply_id");
         if (user == null) {
         	return view;
         }
@@ -76,7 +79,6 @@ public class ComposeDialog extends DialogFragment {
         btnTweet.setTextColor(Color.argb(255, 255, 255, 255));
         btnTweet.setGravity(android.view.Gravity.CENTER);
         btnCancel = (ImageButton) view.findViewById(R.id.btnReply);
-
 
         etWords = (TextView) view.findViewById(R.id.etWords);
 
@@ -107,7 +109,7 @@ public class ComposeDialog extends DialogFragment {
         		Tweet tweet = new Tweet();
                 tweet.setBody(etTweet.getText().toString());
                 tweet.setUser(user);
-    		    listener.onFinishComposeDialog(tweet);
+    		    listener.onFinishComposeDialog(tweet, replyId);
         		getDialog().dismiss();
             }
         });
@@ -115,7 +117,7 @@ public class ComposeDialog extends DialogFragment {
         btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-			    listener.onFinishComposeDialog(null);
+			    listener.onFinishComposeDialog(null, 0);
 				getDialog().dismiss();
 			}
 		});

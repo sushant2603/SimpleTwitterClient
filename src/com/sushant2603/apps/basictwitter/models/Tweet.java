@@ -32,6 +32,8 @@ public class Tweet extends Model implements Serializable {
 	private int likes;
 	@Column(name = "Retweets")
 	private int retweets;
+	@Column(name = "mediaUrl")
+	private String mediaUrl;
 
 	public Tweet() {
 		super();
@@ -54,6 +56,16 @@ public class Tweet extends Model implements Serializable {
 			tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
 			tweet.likes = jsonObject.getInt("favorite_count");
 			tweet.retweets = jsonObject.getInt("retweet_count");
+			 if(jsonObject.getJSONObject("entities").has("media")){
+                 JSONArray mediaArray = jsonObject.getJSONObject("entities").getJSONArray("media");
+                 if(mediaArray != null &&  mediaArray.getJSONObject(0) != null ){
+                         JSONObject mediaJSON = mediaArray.getJSONObject(0) ; 
+                         if(mediaJSON.getString("type").equalsIgnoreCase("photo")){
+                                 tweet.mediaUrl = mediaArray.getJSONObject(0).getString("media_url");
+                         }
+                 }
+			 }
+			//tweet.mediaUrl = jsonObject.getString("media_url");
 		} catch (JSONException e){
 			e.printStackTrace();
 			return null;
@@ -103,9 +115,8 @@ public class Tweet extends Model implements Serializable {
 		return likes;
 	}
 
-	@Override
-	public String toString() {
-		return "Tweet";
+	public String getMediaUrl() {
+		return mediaUrl;
 	}
 
 	public void setBody(String body) {
@@ -131,6 +142,10 @@ public class Tweet extends Model implements Serializable {
 
 	public void setLikes(int likes) {
 		this.likes = likes;
+	}
+
+	public void setMediaUrl(String url) {
+		mediaUrl = url;
 	}
 
 	public static void deleteAll() {
