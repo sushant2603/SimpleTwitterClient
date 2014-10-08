@@ -80,9 +80,10 @@ public final class R {
         public static final int activity_login=0x7f030001;
         public static final int activity_profile=0x7f030002;
         public static final int activity_timeline=0x7f030003;
-        public static final int fragment_compose=0x7f030004;
-        public static final int fragment_tweets_list=0x7f030005;
-        public static final int item_tweet=0x7f030006;
+        public static final int activity_tweet_detail=0x7f030004;
+        public static final int fragment_compose=0x7f030005;
+        public static final int fragment_tweets_list=0x7f030006;
+        public static final int item_tweet=0x7f030007;
     }
     public static final class menu {
         public static final int compose=0x7f090000;
@@ -114,6 +115,7 @@ public final class R {
         public static final int title_activity_photos=0x7f060003;
         public static final int title_activity_profile=0x7f060019;
         public static final int title_activity_timeline=0x7f060005;
+        public static final int title_activity_tweet_detail=0x7f06001e;
         public static final int tweet_body=0x7f060008;
         public static final int tweet_button_text=0x7f06000f;
         public static final int tweet_likes=0x7f060012;

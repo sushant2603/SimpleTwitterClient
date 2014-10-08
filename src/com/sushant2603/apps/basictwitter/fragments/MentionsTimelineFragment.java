@@ -1,6 +1,8 @@
 package com.sushant2603.apps.basictwitter.fragments;
 
 
+import java.util.LinkedList;
+
 import org.json.JSONArray;
 
 import android.os.Bundle;
@@ -18,9 +20,14 @@ public class MentionsTimelineFragment extends TweetsListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		client = TwitterApplication.getRestClient();
+		populateTimeline(0, 0);
 	}
 
 	public void populateTimeline(long max_id, long since_id) {
+		/*if (!isNetworkAvailable()) {
+			addAll((LinkedList<Tweet>) Tweet.getAll());
+			return;
+		}*/
 		client.getMentionsTimeline(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray json) {
@@ -35,6 +42,10 @@ public class MentionsTimelineFragment extends TweetsListFragment {
 
 	@Override
 	public void populateNewItems(long since_id) {
+		/*if (!isNetworkAvailable()) {
+			addAll((LinkedList<Tweet>) Tweet.getAll());
+			return;
+		}*/
 		client.getMentionsTimeline(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray json) {

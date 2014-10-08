@@ -55,8 +55,6 @@ public class TweetsListFragment extends Fragment {
 				populateTimeline(tweets.get(tweets.size()-1).getUid()-1, 0);
 			}
 		});
-
-		populateTimeline(0, 0);
 		return view;
 	}
 
