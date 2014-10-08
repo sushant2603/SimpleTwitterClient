@@ -101,6 +101,7 @@ public class ComposeDialog extends DialogFragment {
 		etTweet.addTextChangedListener(txwatcher);
 		if (!replyUserName.isEmpty()) {
 			etTweet.setText("@" + replyUserName);
+			etTweet.setSelection(etTweet.getText().length());
 		}
 
         btnTweet.setOnClickListener(new View.OnClickListener() {
