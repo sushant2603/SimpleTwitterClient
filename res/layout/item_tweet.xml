@@ -88,7 +88,9 @@
 	        android:drawableLeft="@drawable/ic_retweet"
 	        android:text="@string/retweet_text"
 	        android:paddingLeft="50dp"
-	        android:textColor="#606060" />
+	        android:textColor="#606060"
+	        android:clickable="true"
+	        android:onClick="onRetweet" />
 	
 	    <TextView
 	        android:id="@+id/tvLikes"

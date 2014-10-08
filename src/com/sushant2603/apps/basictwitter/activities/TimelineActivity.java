@@ -31,12 +31,7 @@ import com.sushant2603.apps.basictwitter.models.Tweet;
 import com.sushant2603.apps.basictwitter.models.User;
 
 public class TimelineActivity extends FragmentActivity {
-	//private SwipeRefreshLayout swipeContainer;
 	private TwitterClient client;
-	//private LinkedList<Tweet> tweets;
-	//private TweetsAdapter aTweets;
-	//private TweetsListFragment fragmentTweetsList;
-	//private ListView lvTweets;
 	private User mainUser;
 
 	@Override
@@ -45,30 +40,8 @@ public class TimelineActivity extends FragmentActivity {
 		ActiveAndroid.initialize(this);
 		setContentView(R.layout.activity_timeline);
 		setupTabs();
-		/*swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-		swipeContainer.setOnRefreshListener(new OnRefreshListener() {
-			@Override
-			public void onRefresh() {
-				populateNewItems(tweets.get(0).getUid());
-			}
-		});*/
-
 		client = TwitterApplication.getRestClient();
-		//fragmentTweetsList = (TweetsListFragment) 
-		//		getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
-		//lvTweets = (ListView) findViewById(R.id.lvTweets);
-		//tweets = new LinkedList<Tweet>();
-		//aTweets = new TweetsAdapter(this, tweets);
-
-		/*lvTweets.setAdapter(aTweets);
-		lvTweets.setOnScrollListener(new EndlessScrollListener() {
-			@Override
-			public void onLoadMore(int page, int totalItemsCount) {
-				populateTimeline(tweets.get(tweets.size()-1).getUid(), 0);
-			}
-		});*/
 		getUserDetails();
-		//populateTimeline(0, 0);
 		getActionBar().setTitle(Html.fromHtml("<font color=\"#FFFFFF\">" + "Home" + "</font>"));
 		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.argb(255, 0, 185, 255)));
 	}
@@ -178,54 +151,22 @@ public class TimelineActivity extends FragmentActivity {
 		};
 	}
 
-	/*public void populateNewItems(long since_id) {
-		client.getHomeTimeline(new JsonHttpResponseHandler() {
+	public void onRetweet(View view) {
+		Long replyId = (Long) view.getTag();
+		client.postReTweet(new JsonHttpResponseHandler() {
 			@Override
-			public void onSuccess(JSONArray json) {
-				for (Tweet tweet : Tweet.fromJSONArray(json)) {
-					tweets.addFirst(tweet);
-					fragmentTweetsList.addAll(tweets);
-				}
-				commit();
-				//aTweets.notifyDataSetChanged();
-				//swipeContainer.setRefreshing(false);
+			public void onSuccess(JSONObject json) {
+				Tweet tweet = Tweet.fromJSON(json);
+		        TweetsListFragment fragment = (TweetsListFragment) 
+		        	getSupportFragmentManager().findFragmentById(R.id.flContainer);
+				fragment.add(tweet);
 			}
 			@Override
 			public void onFailure(Throwable e, String s) {
-				//swipeContainer.setRefreshing(false);
-				//Log.d("debug", e.toString());
-			}
-		}, 0, since_id);
-	}
-
-
-	public void populateTimeline(long max_id, long since_id) {
-		/*if (!isNetworkAvailable()) {
-			Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
-			tweets.clear();
-			tweets.addAll(Tweet.getAll());
-			aTweets.notifyDataSetChanged();
-			return;
-		}
-
-		if (max_id == 0 && since_id == 0) {
-			tweets.clear();
-		}*/
-
-		/*client.getHomeTimeline(new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(JSONArray json) {
-				tweets.addAll(Tweet.fromJSONArray(json));
-				//commit();
-			//	aTweets.notifyDataSetChanged();
-			}
-			@Override
-			public void onFailure(Throwable e, String s) {
-				Toast.makeText(TimelineActivity.this, e.toString(), Toast.LENGTH_LONG).show();
 				Log.d("debug", e.toString());
 			}
-		}, max_id, since_id);
-	}*/
+		}, replyId);
+	}
 
 	public void getUserDetails() {
 		if (mainUser == null) {
@@ -241,11 +182,4 @@ public class TimelineActivity extends FragmentActivity {
 			});
 		}
 	}
-
-	/*private Boolean isNetworkAvailable() {
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
-	}*/
 }

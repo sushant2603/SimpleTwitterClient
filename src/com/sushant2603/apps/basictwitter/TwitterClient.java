@@ -60,17 +60,6 @@ public class TwitterClient extends OAuthBaseClient {
 		client.get(apiUrl, params, handler);
 	}
 
-	public void postTweet(AsyncHttpResponseHandler handler, Tweet tweet,
-			long in_reply_to_status_id) {
-		String apiUrl = getApiUrl("statuses/update.json");
-		RequestParams params = new RequestParams();
-		params.put("status", tweet.getBody());
-		if (in_reply_to_status_id != 0) {
-			params.put("in_reply_to_status_id", Long.toString(in_reply_to_status_id));
-		}
-		client.post(apiUrl, params, handler);
-	}
-
 	public void getUser(AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("account/verify_credentials.json");
 		client.get(apiUrl, null, handler);
@@ -90,4 +79,22 @@ public class TwitterClient extends OAuthBaseClient {
 		}
 		client.get(apiUrl, params, handler);
 	}
+
+	public void postTweet(AsyncHttpResponseHandler handler, Tweet tweet,
+			long in_reply_to_status_id) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		RequestParams params = new RequestParams();
+		params.put("status", tweet.getBody());
+		if (in_reply_to_status_id != 0) {
+			params.put("in_reply_to_status_id", Long.toString(in_reply_to_status_id));
+		}
+		client.post(apiUrl, params, handler);
+	}
+
+	public void postReTweet(AsyncHttpResponseHandler handler, long in_reply_to_status_id) {
+		String apiUrl = getApiUrl("statuses/retweet/");
+		apiUrl += Long.toString(in_reply_to_status_id) + ".json";
+		client.post(apiUrl, null, handler);
+	}
+
 }

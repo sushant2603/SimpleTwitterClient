@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
@@ -19,9 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.sushant2603.apps.basictwitter.R;
 import com.sushant2603.apps.basictwitter.activities.ProfileActivity;
+import com.sushant2603.apps.basictwitter.fragments.TweetsListFragment;
 import com.sushant2603.apps.basictwitter.models.Tweet;
 import com.sushant2603.apps.basictwitter.models.User;
 
@@ -101,20 +105,12 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 		}
 
 		viewHolder.tvRetweets.setText(Integer.toString(tweet.getRetweets()));
-		viewHolder.tvRetweets.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-				
-			}
-			
-		});
-		
+		viewHolder.tvRetweets.setTag(tweet.getUid());
+
 		viewHolder.tvLikes.setText(Integer.toString(tweet.getLikes()));
-		viewHolder.tvRetweets.setOnClickListener(new View.OnClickListener() {
+		viewHolder.tvLikes.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
 				
 			}
 			
